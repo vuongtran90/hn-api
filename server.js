@@ -136,7 +136,7 @@ app.use(function(req, res, next){
 	res.setHeader('Cache-Control', 'public, max-age=' + CACHE_EXP);
 	next();
 });
-app.use(cors());
+app.use(cors({credentials: true, origin: true}));
 app.use(compress());
 app.use(function(req, res, next){
 	['send', 'set'].forEach(function(method){
@@ -412,9 +412,3 @@ app.get(/^\/user\/([\w\-]+)$/, function(req, res){
 });
 
 app.listen(nconf.get('PORT') || nconf.get('port'));
-
-app.all('/*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
-});
